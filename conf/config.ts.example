@@ -1,0 +1,8 @@
+const config = {
+  apis: {
+    CX: 'asdf',
+    IMAGE: 'asdf',
+  },
+};
+
+export default config;
