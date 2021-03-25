@@ -8,14 +8,20 @@
   },
   "dependencies": {
     "@types/axios": "^0.14.0",
+    "@types/lodash.includes": "^4.3.6",
+    "@types/lodash.remove": "^4.7.6",
     "@types/tmi.js": "^1.7.1",
+    "@types/url-parse": "^1.4.3",
     "axios": "^0.21.1",
     "lodash.find": "^4.6.0",
+    "lodash.includes": "^4.3.0",
+    "lodash.remove": "^4.7.0",
     "next": "latest",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "styled-components": "^5.0.0",
-    "tmi.js": "^1.7.5"
+    "tmi.js": "^1.7.5",
+    "url-parse": "^1.5.1"
   },
   "devDependencies": {
     "@types/lodash.find": "^4.6.6",
