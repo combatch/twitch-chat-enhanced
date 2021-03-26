@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import tmi, { ChatUserstate } from 'tmi.js';
@@ -28,6 +28,13 @@ export const Home = (): React.ReactElement => {
 
 
   const imgRegex = new RegExp('img (.+)', 'i');
+  const bottomDivRef = useRef(null);
+  const scrollToBottom = (): void => {
+    if (bottomDivRef !== null) {
+      bottomDivRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
 
   useEffect(() => {
     if (streamername !== undefined) {
@@ -49,6 +56,7 @@ export const Home = (): React.ReactElement => {
         const exists: boolean = !!find(messages, merged);
         if (!exists) {
           setMesssages(messages => [...messages, merged])
+          scrollToBottom();
         }
 
         if (imgRegex.test(message)) {
@@ -64,6 +72,7 @@ export const Home = (): React.ReactElement => {
               tags: { 'display-name': 'MiyaoBot', 'message-type': 'botImage' }
             }
             setMesssages(messages => [...messages, image])
+            scrollToBottom();
 
           })();
         }
@@ -78,22 +87,30 @@ export const Home = (): React.ReactElement => {
   console.log({ messages });
 
   return (<div>
-    <Title>Title</Title>
-    {messages.map((x: Chat, i: number) => {
-      const { tags, message, media } = x
-      const { 'message-type': messageType, 'display-name': displayName, color, } = tags
-      if (media) {
-        return (<div key={i}><img src={media} /> </div>)
-      } else {
-        return (<p key={i}> <strong style={{ color: color }}>{displayName}</strong>: {message}</p>)
-      }
-    })}
+    <Container>
+      {messages.map((x: Chat, i: number) => {
+        const { tags, message, media } = x
+        const { 'message-type': messageType, 'display-name': displayName, color, } = tags
+        if (media) {
+          return (<div key={i}><img src={media} /> </div>)
+        } else {
+          return (<p key={i} className="textstroke"> <strong style={{ color: color }}>{displayName}</strong>: {message}</p>)
+        }
+      })}
+    </Container>
+    <div ref={bottomDivRef}></div>
   </div >)
 }
 
-const Title = styled.h1`
-  color: blue;
-  font- size: 50px;
+const Container = styled.div`
+  .textstroke {
+  color: white;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px,
+             #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px;
+  //text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  }
+
 `
 
 export default Home;
