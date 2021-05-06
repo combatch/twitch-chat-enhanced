@@ -63,6 +63,11 @@ const performImageSearch = async (
   query: string,
   safeSearch: string = 'high'
 ) => {
+  if (!config) {
+    console.log('missing config file, image search requires API KEY');
+    return;
+  }
+
   try {
     const { data } = await axios.get(
       `https://www.googleapis.com/customsearch/v1?q=${query}&cx=${config.apis.CX}&imgSize=medium&imgType=photo&num=7&safe=${safeSearch}&searchType=image&key=${config.apis.IMAGE}`
