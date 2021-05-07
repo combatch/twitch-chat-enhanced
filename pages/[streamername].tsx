@@ -5,6 +5,7 @@ import tmi, { ChatUserstate } from 'tmi.js';
 import find from 'lodash.find';
 
 import { imgSearch } from '../src/utils/images'
+import ChatMessage from './ChatMessage';
 
 export interface Chat {
   tags: ChatUserstate;
@@ -86,20 +87,14 @@ export const Home = (): React.ReactElement => {
 
   console.log({ messages });
 
-  return (<div>
-    <Container>
-      {messages.map((x: Chat, i: number) => {
-        const { tags, message, media } = x
-        const { 'message-type': messageType, 'display-name': displayName, color, } = tags
-        if (media) {
-          return (<div key={i}><img src={media} /> </div>)
-        } else {
-          return (<p key={i} className="textstroke"> <strong style={{ color: color }}>{displayName}</strong>: {message}</p>)
-        }
-      })}
-    </Container>
-    <div ref={bottomDivRef}></div>
-  </div >)
+  return (
+    <div>
+      <Container>
+        <ChatMessage messages={messages} />
+      </Container>
+      <div ref={bottomDivRef}></div>
+    </div>
+  );
 }
 
 const Container = styled.div`
