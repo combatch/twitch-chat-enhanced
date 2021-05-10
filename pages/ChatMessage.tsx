@@ -8,7 +8,10 @@ interface IChatmessageProps {
 const ChatMessage: React.FunctionComponent<IChatmessageProps> = ({ messages }: IChatmessageProps) => {
 	return (
 		<React.Fragment>
-			{messages.map((x: Chat, i: number) => {
+			{(messages.length > 400
+				? messages.slice(Math.max(messages.length - 400, 0))
+				: messages)
+			.map((x: Chat, i: number) => {
 				const { tags, message, media } = x;
 				const { 'message-type': messageType, 'display-name': displayName, color } = tags;
 
