@@ -13,14 +13,6 @@ export interface Chat {
   media?: string;
 }
 
-
-// discard old message
-// if (messages.length > 50) {
-//   let oldMessages = [].slice.call(messages).slice(0, 10);
-
-//   //  setMesssages(oldM)
-// }
-
 export const Home = (): React.ReactElement => {
   const router = useRouter()
   const { streamername }: any = router.query
@@ -86,6 +78,12 @@ export const Home = (): React.ReactElement => {
   }, [socketClient]);
 
   console.log({ messages });
+
+  const limit = 400;
+
+  if (messages.length > limit) {
+    setMesssages(messages.slice(-limit));
+  }
 
   return (
     <div>
